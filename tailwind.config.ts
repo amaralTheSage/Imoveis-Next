@@ -8,10 +8,13 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        orange: "#FFAD0F",
+        "dark-gray": "#4E4E4E",
+        "light-gray": "#A6A6A6",
+      },
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        hero: "url('../public/hero.png')",
       },
     },
   },
