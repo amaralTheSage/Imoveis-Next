@@ -1,11 +1,12 @@
 import React from "react";
 import heroPng from "../public/hero2.png";
+import Image from "next/image";
 
 export default function FilterSection() {
   return (
     <div
-      style={{ backgroundImage: `url(${heroPng})` }}
-      className="min-h-[500px] bg-cover bg-no-repeat bg-center bg-hero"
+      style={{ backgroundImage: `url(${heroPng.src})` }}
+      className="min-h-[500px] bg-cover bg-no-repeat bg-center"
     >
       <div className=" lg:max-w-[80%] m-auto py-[10px] flex justify-center ">
         <form className="bg-white rounded-md w-[85vw]  bg-opacity-80 mt-4 p-4 text-xl lg:text-base lg:grid lg:grid-cols-2 lg:gap-5">
