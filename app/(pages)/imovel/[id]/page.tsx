@@ -70,6 +70,8 @@ import whatsappIcon from "../../../../public/whatsapp-icon.png";
 //   },
 // ];
 
+const axios = require("axios").default;
+
 export default function PaginaImovel({ params }: { params: { id: number } }) {
   const [imoveis, setImoveis] = useState([]);
   const [imovel, setImovel] = useState({});
@@ -77,34 +79,24 @@ export default function PaginaImovel({ params }: { params: { id: number } }) {
   const [isPending, setIsPending] = useState(true);
 
   useEffect(() => {
-    async function getImoveis() {
-      await fetch("http://localhost:3333")
-        .then((res) => res.json())
-        .then(async (data) => {
-          setImoveis(data);
-        });
+    try {
+      axios.get("http://localhost:3333").then((res) => setImoveis(res.data));
+
+      axios
+        .get(`http://localhost:3333/${params.id}`)
+        .then((res) => setImovel(res.data));
+
+      axios
+        .get(`http://localhost:3333/${params.id}/images`)
+        .then((res) => setImages(res.data));
+    } catch {
+      console.error("ERROOOOOOOOOOOOO");
+    } finally {
+      setIsPending(false);
     }
-
-    getImoveis();
-
-    async function getImovel() {
-      await fetch(`http://localhost:3333/${params.id}`)
-        .then((res) => res.json())
-        .then(async (data) => {
-          setImovel(data);
-        });
-
-      await fetch(`http://localhost:3333/${params.id}/images`)
-        .then((res) => res.json())
-        .then((data) => {
-          setImages(data);
-          console.log(data);
-        });
-    }
-    getImovel();
-
-    setIsPending(false);
   }, [params.id]);
+
+  console.log(imoveis, imovel, images);
 
   return (
     <>
@@ -124,11 +116,11 @@ export default function PaginaImovel({ params }: { params: { id: number } }) {
                 />
 
                 <div className="grid grid-cols-3  gap-1 md:text-2xl">
-                  <Image src={imgImovel} alt="" className="" />
-                  <Image src={imgImovel} alt="" className="" />
+                  <Image src={images[0].imageUrl} alt="" className="" />
+                  <Image src={images[1].imageUrl} alt="" className="" />
                   <div className="w-full text-center">
                     <Image
-                      src={imgImovel}
+                      src={images[2].imageUrl}
                       alt=""
                       className="brightness-50 "
                       width={10}
@@ -158,7 +150,7 @@ export default function PaginaImovel({ params }: { params: { id: number } }) {
                       height={10}
                     />{" "}
                     Bairro:
-                    {imovel.neighbourhood} -{imovel.city}
+                    {imovel.neighbourhood} - {imovel.city}
                   </li>
                   <li className="w-1/2 flex my-1 relative right-[2px] gap-1 items-center ">
                     <Image
@@ -257,7 +249,7 @@ export default function PaginaImovel({ params }: { params: { id: number } }) {
               })}
             </div>
           </main>
-          <Footer />{" "}
+          <Footer />
         </>
       ) : (
         "LOADING"
