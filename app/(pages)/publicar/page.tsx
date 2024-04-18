@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
 import React from "react";
 import { apiClient } from "@/services/apiClient";
 import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import viteSvg from "@/public/images/vite.svg";
 import Footer from "../../../components/Footer";
@@ -28,11 +28,16 @@ const schema = yup.object().shape({
 type FormData = yup.InferType<typeof schema>;
 
 export default function Publicar() {
-
   const [pending, setPending] = React.useState(false);
   const [error, setError] = React.useState<string>("");
 
-  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    setValue,
+  } = useForm<FormData>({
     resolver: yupResolver(schema),
     defaultValues: {
       name: "",
@@ -46,8 +51,8 @@ export default function Publicar() {
       car_spots: 0,
       price: 0,
       rent: 0,
-      condo_price: 0
-    }
+      condo_price: 0,
+    },
   });
 
   async function onSubmit(form: FormData) {
@@ -78,7 +83,7 @@ export default function Publicar() {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
 
-      if (file.type.startsWith('image/')) {
+      if (file.type.startsWith("image/")) {
         const url = URL.createObjectURL(file);
         urls.push(url);
       }
@@ -111,10 +116,16 @@ export default function Publicar() {
             </label>
             <input
               type="text"
-              {...register("name")}
+              {...register("name", {
+                required: {
+                  value: true,
+                  message: "Este campo é obrigatório",
+                },
+              })}
               id="name"
               className="block border border-orange border-opacity-50 rounded-[4px] px-2 py-1 w-full "
             />
+            <p>{errors.name?.message}</p>
           </div>
 
           <div className="xl:row-span-2 h-max">
@@ -130,6 +141,7 @@ export default function Publicar() {
               id="description"
               className="block border border-orange border-opacity-50 rounded-[4px] px-2 py-1 w-full xl:h-28"
             />
+            <p>{errors.description?.message}</p>
           </div>
 
           <div>
@@ -145,6 +157,7 @@ export default function Publicar() {
               id="area"
               className="block border border-orange border-opacity-50 rounded-[4px] px-2 py-1 w-full "
             />
+            <p>{errors.area?.message}</p>
           </div>
 
           <div>
@@ -160,6 +173,7 @@ export default function Publicar() {
               id="bedrooms"
               className="block border border-orange border-opacity-50 rounded-[4px] px-2 py-1 w-full "
             />
+            <p>{errors.bedrooms?.message}</p>
           </div>
 
           <div>
@@ -175,6 +189,7 @@ export default function Publicar() {
               id="bathrooms"
               className="block border border-orange border-opacity-50 rounded-[4px] px-2 py-1 w-full "
             />
+            <p>{errors.bathrooms?.message}</p>
           </div>
 
           <div>
@@ -190,6 +205,7 @@ export default function Publicar() {
               id="car_spots"
               className="block border border-orange border-opacity-50 rounded-[4px] px-2 py-1 w-full "
             />
+            <p>{errors.car_spots?.message}</p>
           </div>
 
           <div className="grid grid-cols-2 text-light-gray">
@@ -206,6 +222,7 @@ export default function Publicar() {
               <option value="land">Terreno</option>
               <option value="camp">Campo</option>
             </select>
+            <p>{errors.type?.message}</p>
           </div>
 
           <div>
@@ -221,6 +238,7 @@ export default function Publicar() {
               id="price"
               className="block border border-orange border-opacity-50 rounded-[4px] px-2 py-1 w-full "
             />
+            <p>{errors.price?.message}</p>
           </div>
           <div>
             <label
@@ -235,6 +253,7 @@ export default function Publicar() {
               id="rent"
               className="block border border-orange border-opacity-50 rounded-[4px] px-2 py-1 w-full "
             />
+            <p>{errors.rent?.message}</p>
           </div>
 
           <div>
@@ -250,6 +269,7 @@ export default function Publicar() {
               id="condo_price"
               className="block border border-orange border-opacity-50 rounded-[4px] px-2 py-1 w-full "
             />
+            <p>{errors.condo_price?.message}</p>
           </div>
 
           <div>
@@ -266,6 +286,7 @@ export default function Publicar() {
               multiple
               onChange={uploadImages}
             />
+            <p>{errors.images?.message}</p>
           </div>
 
           <button className="text-white bg-orange p-3 my-3  rounded-md font-medium">
