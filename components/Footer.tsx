@@ -1,13 +1,10 @@
 import Image from "next/image";
-import viteSvg from "../public/vercel.svg";
 import React from "react";
+import viteSvg from "@/public/images/vite.svg"
 
 function Footer() {
   return (
-    <footer
-      className="bg-[#F8F8F8] text-lg  shadow-inner drop-shadow-2xl p-8  lg:flex justify-between mt-7
-    "
-    >
+    <footer className="bg-[#F8F8F8] text-lg  shadow-inner drop-shadow-2xl p-8  lg:flex justify-between mt-7">
       <div className="flex flex-col items-center lg:flex-row   ">
         <Image src={viteSvg} className="w-12 lg:w-14" alt="JVS Imóveis" />
         <h4 className="text-2xl">Coisa Janice</h4>

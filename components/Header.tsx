@@ -1,5 +1,5 @@
 import React from "react";
-import viteSvg from "../public/vercel.svg";
+import viteSvg from "../public/images/vercel.svg";
 import Image from "next/image";
 
 export default function Header() {

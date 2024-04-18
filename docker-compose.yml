@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+
+  app:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      container_name: imoveis-app
+      ports:
+        - '3000:3000'
+      volumes:
+        - .:/app
+        - /app/node_modules
+      
+  db:
+      image: mysql:5.7.22
+      restart: unless-stopped
+      environment:
+          MYSQL_DATABASE: ${DB_DATABASE}
+          MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+          MYSQL_PASSWORD: ${DB_PASSWORD}
+          MYSQL_USER: ${DB_USERNAME}
+      volumes:
+          - ./.docker/mysql/dbdata:/var/lib/mysql
+      ports:
+          - "3388:3306"
+      networks:
+          - next
+
+networks:
+    next:
+        driver: bridge
