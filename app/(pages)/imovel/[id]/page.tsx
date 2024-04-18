@@ -5,102 +5,47 @@ import Image from "next/image";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import PropertyCard from "@/components/PropertyCard";
+import { Property } from "@/types/types";
+import { apiClient } from "@/services/apiClient";
 
 import { format } from "../../../../utils/BRLFormatter";
-import imgImovel from "../../../../public/imgImóvel.png";
+import imgImovel from "@/public/images/img-imovel.png";
 
-import mapIcon from "../../../../public/map-icon.svg";
-import bathtubIcon from "../../../../public/bathtub-icon.png";
-import bedIcon from "../../../../public/bed-icon.png";
-import mailIcon from "../../../../public/mail-icon.png";
-import carIcon from "../../../../public/car-icon.png";
-import rulerIcon from "../../../../public/ruler-icon.png";
-import whatsappIcon from "../../../../public/whatsapp-icon.png";
-
-// const imovel = {
-//   id: 1,
-//   nome: "Casa à venda no Amarilis",
-//   tipo: 0,
-//   bairro: "Laranjal",
-//   cidade: "Pelotas, RS",
-//   descricao:
-//     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id porta lacus, non accumsan nunc. Praesent eu odio enim. Vivamus at semper ex. Vivamus in orci at lacus aliquet lacinia. Nunc hendrerit sagittis vulputate. Aenean pharetra tortor at magna pharetra auctor. Donec non nunc et arcu ornare tempor. Etiam ac leo neque. ",
-//   imgs: [imgImovel, imgImovel, imgImovel, imgImovel, imgImovel, imgImovel],
-//   metragem: 60,
-//   quartos: 2,
-//   banheiros: 1,
-//   vagas: 2,
-//   precoVenda: 300000,
-//   precoAluguel: 0,
-//   condominio: 200,
-// };
-
-// const imoveis = [
-//   {
-//     id: 1,
-//     nome: "Casa à venda no Amarilis",
-//     tipo: 0,
-//     bairro: "Laranjal",
-//     cidade: "Pelotas, RS",
-//     descricao:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id porta lacus, non accumsan nunc. Praesent eu odio enim. Vivamus at semper ex. Vivamus in orci at lacus aliquet lacinia. Nunc hendrerit sagittis vulputate. Aenean pharetra tortor at magna pharetra auctor. Donec non nunc et arcu ornare tempor. Etiam ac leo neque. ",
-//     imgs: [imgImovel, imgImovel, imgImovel, imgImovel, imgImovel, imgImovel],
-//     metragem: 60,
-//     quartos: 2,
-//     banheiros: 1,
-//     vagas: 2,
-//     precoVenda: 300000,
-//     condominio: 200,
-//   },
-//   {
-//     id: 2,
-//     nome: "Casa à venda no Amarilis",
-//     tipo: 1,
-//     bairro: "Laranjal",
-//     cidade: "Pelotas, RS",
-//     descricao:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id porta lacus, non accumsan nunc. Praesent eu odio enim. Vivamus at semper ex. Vivamus in orci at lacus aliquet lacinia. Nunc hendrerit sagittis vulputate. Aenean pharetra tortor at magna pharetra auctor. Donec non nunc et arcu ornare tempor. Etiam ac leo neque. ",
-//     imgs: [imgImovel, imgImovel, imgImovel, imgImovel],
-//     metragem: 60,
-//     quartos: 2,
-//     banheiros: 1,
-//     vagas: 2,
-//     precoAluguel: 1234,
-//     condominio: 200,
-//   },
-// ];
-
-const axios = require("axios").default;
+import mapIcon from "@/public/map-icon.svg";
+import bathtubIcon from "@/public/bathtub-icon.png";
+import bedIcon from "@/public/bed-icon.png";
+import mailIcon from "@/public/mail-icon.png";
+import carIcon from "@/public/car-icon.png";
+import rulerIcon from "@/public/ruler-icon.png";
+import whatsappIcon from "@/public/whatsapp-icon.png";
 
 export default function PaginaImovel({ params }: { params: { id: number } }) {
-  const [imoveis, setImoveis] = useState([]);
-  const [imovel, setImovel] = useState({});
+
+  const [imoveis, setImoveis] = useState<Property[]>([]);
+  const [imovel, setImovel] = useState<Property>({} as Property);
   const [images, setImages]: [any, any] = useState([]);
-  const [isPending, setIsPending] = useState(true);
+  const [pending, setPending] = useState(true);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
     try {
-      axios.get("http://localhost:3333").then((res) => setImoveis(res.data));
-
-      axios
-        .get(`http://localhost:3333/${params.id}`)
-        .then((res) => setImovel(res.data));
-
-      axios
-        .get(`http://localhost:3333/${params.id}/images`)
-        .then((res) => setImages(res.data));
-    } catch {
-      console.error("ERROOOOOOOOOOOOO");
+      setPending(true);
+      //const response = await apiClient.get("http://localhost:3333/api/imoveis");
+      //setImoveis(response.data.properties);
+    } catch (e: any) {
+      setError(e.response.data.message ?? e.response.message);
     } finally {
-      setIsPending(false);
+      setPending(false);
     }
-  }, [params.id]);
-
-  console.log(imoveis, imovel, images);
+  }
 
   return (
     <>
-      {isPending == false ? (
+      {!pending ? (
         <>
           <Header />
           {/*wrapper */}
@@ -150,7 +95,7 @@ export default function PaginaImovel({ params }: { params: { id: number } }) {
                       height={10}
                     />{" "}
                     Bairro:
-                    {imovel.neighbourhood} - {imovel.city}
+                    {imovel.neighborhood} - {imovel.city}
                   </li>
                   <li className="w-1/2 flex my-1 relative right-[2px] gap-1 items-center ">
                     <Image
@@ -170,8 +115,8 @@ export default function PaginaImovel({ params }: { params: { id: number } }) {
                       width={10}
                       height={10}
                     />
-                    {imovel.numBedrooms}
-                    {imovel.numBedrooms == 1 ? " Quarto" : " Quartos"}
+                    {imovel.bedrooms}
+                    {imovel.bedrooms == 1 ? " Quarto" : " Quartos"}
                   </li>
                   <li className="w-1/2 flex my-1 gap-1 items-center ">
                     <Image
@@ -181,8 +126,8 @@ export default function PaginaImovel({ params }: { params: { id: number } }) {
                       width={10}
                       height={10}
                     />
-                    {imovel.numBathrooms}
-                    {imovel.numBathrooms == 1 ? " Banheiro" : " Banheiros"}
+                    {imovel.bathrooms}
+                    {imovel.bathrooms == 1 ? " Banheiro" : " Banheiros"}
                   </li>
                   <li className="w-1/2 flex my-1 gap-1 items-center ">
                     <Image
@@ -192,8 +137,8 @@ export default function PaginaImovel({ params }: { params: { id: number } }) {
                       width={10}
                       height={10}
                     />
-                    {imovel.numCarSpots}
-                    {imovel.numCarSpots == 1 ? " Vaga" : " Vagas"}
+                    {imovel.car_spots}
+                    {imovel.car_spots == 1 ? " Vaga" : " Vagas"}
                   </li>
                 </ul>
                 <div>
@@ -212,10 +157,10 @@ export default function PaginaImovel({ params }: { params: { id: number } }) {
                   </div>
                   <div className="flex justify-between text-xl xl:text-2xl">
                     <span className="font-medium ">
-                      {imovel.condoPrice && "Condomínio"}
+                      {imovel.condo_price && "Condomínio"}
                     </span>
                     <span>
-                      {imovel.condoPrice && format(imovel.condoPrice)}
+                      {imovel.condo_price && format(imovel.condo_price)}
                     </span>
                   </div>
                 </div>
@@ -244,8 +189,8 @@ export default function PaginaImovel({ params }: { params: { id: number } }) {
               Veja Outros Imóveis à Venda
             </h3>
             <div className="grid grid-flexivel gap-3 mx-8 lg:mx-0">
-              {imoveis.slice(1).map((i) => {
-                return <PropertyCard imovel={i} key={i.id} />;
+              {imoveis.slice(1).map((property) => {
+                return <PropertyCard property={property} key={property.id} />;
               })}
             </div>
           </main>
