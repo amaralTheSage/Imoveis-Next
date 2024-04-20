@@ -38,7 +38,8 @@ export default function FilterSection() {
     resolver: yupResolver(schema),
     // defaultValues: {
     //   location: "",
-    //   type: "house",
+    //   type: "selling",
+    //   property_type: "house",
     //   min_price: 0,
     //   max_price: 0,
     //   min_area: 0,
@@ -90,18 +91,49 @@ export default function FilterSection() {
               placeholder="Pesquisar por localidade"
               {...register("location")}
             />
-            <div className="flex my-3 gap-4  lg:justify-end">
-              <button
-                className="w-full p-2 border border-orange rounded-bl-md text-white lg:max-w-32
-              bg-orange"
-              >
-                Venda
-              </button>
 
-              <button className="w-full p-2 border border-orange rounded-br-md lg:max-w-32">
-                Locação
-              </button>
+            <div className="flex my-3 gap-4 h-12 lg:justify-end">
+              <div
+                className="w-full border border-orange
+                 rounded-bl-md text-white lg:max-w-32"
+              >
+                <input
+                  type="radio"
+                  id="sellingRadio"
+                  value={"selling"}
+                  className="hidden peer"
+                  {...register("type")}
+                />
+
+                <label
+                  htmlFor="sellingRadio"
+                  className="peer-checked:bg-orange peer-checked:text-white cursor-pointer duration-100 flex h-full justify-center items-center"
+                >
+                  Venda
+                </label>
+              </div>
+
+              <div
+                className="w-full border border-orange
+                 rounded-bl-md text-white lg:max-w-32"
+              >
+                <input
+                  type="radio"
+                  id="rentingRadio"
+                  value={"renting"}
+                  className="hidden peer"
+                  {...register("type")}
+                />
+
+                <label
+                  htmlFor="rentingRadio"
+                  className="peer-checked:bg-orange peer-checked:text-white cursor-pointer duration-100 flex h-full justify-center items-center"
+                >
+                  Locação
+                </label>
+              </div>
             </div>
+
             <div>
               <p className="font-semibold">Tipo de imóvel:</p>
               <div className="grid grid-cols-2 text-[16px] md:text-xl">
@@ -150,13 +182,13 @@ export default function FilterSection() {
               <p className="font-medium">Preço:</p>
               <div className=" flex gap-3 justify-between ">
                 <input
-                  type="text"
+                  type="number"
                   className=" w-1/2 py-1 px-2 rounded-sm border   "
                   placeholder="de R$"
                   {...register("min_price")}
                 />
                 <input
-                  type="text"
+                  type="number"
                   className="w-1/2 py-1 px-2 rounded-sm border   "
                   placeholder="até R$"
                   {...register("max_price")}
@@ -168,13 +200,13 @@ export default function FilterSection() {
               <p className="font-medium">Área:</p>
               <div className=" flex  gap-3 justify-between">
                 <input
-                  type="text"
+                  type="number"
                   className="w-1/2  py-1 px-2 rounded-sm border   "
                   placeholder="Mínimo m²"
                   {...register("min_area")}
                 />
                 <input
-                  type="text"
+                  type="number"
                   className="w-1/2  py-1 px-2 rounded-sm border   "
                   placeholder="Máximo m²"
                   {...register("max_area")}
@@ -186,7 +218,7 @@ export default function FilterSection() {
               <p className="font-medium">Quartos:</p>
               <div>
                 <input
-                  type="text"
+                  type="number"
                   className="w-1/2  py-1 px-2 rounded-sm border   "
                   placeholder="Mínimo"
                   {...register("bedrooms")}
@@ -198,7 +230,7 @@ export default function FilterSection() {
               <p className="font-medium">Banheiros:</p>
               <div>
                 <input
-                  type="text"
+                  type="number"
                   className="w-1/2  py-1 px-2 rounded-sm border   "
                   placeholder="Mínimo"
                   {...register("bathrooms")}
@@ -210,7 +242,7 @@ export default function FilterSection() {
               <p className="font-medium">Vagas:</p>
               <div>
                 <input
-                  type="text"
+                  type="number"
                   className="w-1/2 py-1 px-2 rounded-sm border   "
                   placeholder="Mínimo"
                   {...register("car_spots")}
