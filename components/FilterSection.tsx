@@ -11,15 +11,16 @@ import Image from "next/image";
 // * CONFIGURAR VALIDATION *
 
 const schema = yup.object().shape({
-  location: yup.string().required(),
-  type: yup.string().required(),
-  min_price: yup.number().required(),
-  max_price: yup.number().required(),
-  min_area: yup.number().required(),
-  max_area: yup.number().required(),
-  bedrooms: yup.number().required(),
-  bathrooms: yup.number().required(),
-  car_spots: yup.number().required(),
+  location: yup.string(),
+  type: yup.string(),
+  property_type: yup.string(),
+  min_price: yup.number(),
+  max_price: yup.number(),
+  min_area: yup.number(),
+  max_area: yup.number(),
+  bedrooms: yup.number(),
+  bathrooms: yup.number(),
+  car_spots: yup.number(),
 });
 
 type FormData = yup.InferType<typeof schema>;
@@ -35,20 +36,20 @@ export default function FilterSection() {
     reset,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
-    defaultValues: {
-      location: "",
-      type: "house",
-      min_price: 0,
-      max_price: 0,
-      min_area: 0,
-      max_area: 0,
-      bedrooms: 0,
-      bathrooms: 0,
-      car_spots: 0,
-    }, // initial values
+    // defaultValues: {
+    //   location: "",
+    //   type: "house",
+    //   min_price: 0,
+    //   max_price: 0,
+    //   min_area: 0,
+    //   max_area: 0,
+    //   bedrooms: 0,
+    //   bathrooms: 0,
+    //   car_spots: 0,
+    // }, // initial values
   });
 
-  async function onSubmit(form: FormData) {
+  async function onSubmit(data: FormData) {
     try {
       setPending(true);
       //const response = await apiClient.post("http://localhost:3000/api/imoveis");
@@ -59,6 +60,8 @@ export default function FilterSection() {
     } finally {
       setPending(false);
     }
+
+    console.log(data);
   }
 
   function requestError(e: any) {
@@ -88,39 +91,34 @@ export default function FilterSection() {
               {...register("location")}
             />
             <div className="flex my-3 gap-4  lg:justify-end">
-              <input
+              <button
                 className="w-full p-2 border border-orange rounded-bl-md text-white lg:max-w-32
               bg-orange"
-                value="selling"
               >
                 Venda
-              </input>
-              <input type="radio" name="selling" id="selling" />
-              <label htmlFor="selling">Venda</label>
-              <button
-                className="w-full p-2 border border-orange rounded-br-md lg:max-w-32"
-                value="renting"
-              >
+              </button>
+
+              <button className="w-full p-2 border border-orange rounded-br-md lg:max-w-32">
                 Locação
               </button>
-              <input type="radio" name="renting" id="renting" />
-              <label htmlFor="renting">Aluguel</label>
             </div>
             <div>
               <p className="font-semibold">Tipo de imóvel:</p>
               <div className="grid grid-cols-2 text-[16px] md:text-xl">
                 <div>
                   <input
-                    type="checkbox"
-                    className="ratio-square w-5 rounded-lg border-orange "
+                    type="radio"
+                    {...register("property_type")}
+                    value={"house"}
                   />
                   <span className="text-light-gray font-light ">Casa</span>
                 </div>
 
                 <div>
                   <input
-                    type="checkbox"
-                    className="ratio-square w-5 rounded-lg border-orange checked:bg-orange"
+                    type="radio"
+                    {...register("property_type")}
+                    value={"apartment"}
                   />
                   <span className="text-light-gray font-light ">
                     Apartamento
@@ -129,16 +127,18 @@ export default function FilterSection() {
 
                 <div>
                   <input
-                    type="checkbox"
-                    className="ratio-square w-5 rounded-lg border-orange "
+                    type="radio"
+                    {...register("property_type")}
+                    value={"urban_land"}
                   />
                   <span className="text-light-gray font-light ">Terreno</span>
                 </div>
 
                 <div>
                   <input
-                    type="checkbox"
-                    className="ratio-square w-5 rounded-lg border-orange "
+                    type="radio"
+                    {...register("property_type")}
+                    value={"rural_land"}
                   />
                   <span className="text-light-gray font-light ">Campo</span>
                 </div>
@@ -218,7 +218,10 @@ export default function FilterSection() {
               </div>
             </div>
 
-            <button className="bg-orange text-white w-full py-2 rounded-md mt-2">
+            <button
+              type="submit"
+              className="bg-orange text-white w-full py-2 rounded-md mt-2"
+            >
               Buscar
             </button>
           </div>

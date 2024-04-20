@@ -10,16 +10,19 @@ import Footer from "../../../components/Footer";
 import Image from "next/image";
 
 const schema = yup.object().shape({
-  name: yup.string().max(50).required(),
-  type: yup.string().required(),
-  neighborhood: yup.string().max(20),
-  city: yup.string().max(20).required(),
+  name: yup
+    .string()
+    .max(55, "No máximo 55 caracteres")
+    .required("Este campo é obrigatório"),
+  type: yup.string().required("Este campo é obrigatório"),
+  neighborhood: yup.string().max(20, "No máximo 22 caracteres"),
+  city: yup.string().max(20).required("Este campo é obrigatório"),
   description: yup.string(),
-  images: yup.array().required(),
-  area: yup.number().required(),
-  bedrooms: yup.number().required(),
-  bathrooms: yup.number().required(),
-  car_spots: yup.number().required(),
+  images: yup.array().required("Este campo é obrigatório"),
+  area: yup.number().required("Este campo é obrigatório"),
+  bedrooms: yup.number().required("Este campo é obrigatório"),
+  bathrooms: yup.number().required("Este campo é obrigatório"),
+  car_spots: yup.number().required("Este campo é obrigatório"),
   price: yup.number(),
   rent: yup.number(),
   condo_price: yup.number(),
