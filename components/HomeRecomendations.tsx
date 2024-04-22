@@ -7,29 +7,30 @@ import PropertyCard from "./PropertyCard";
 import { Property } from "@/types/types";
 import { testing_data } from "@/utils/ItemsData";
 
-export default function HomeRecomendations() {
-
-  const [properties, setProperties] = useState<Property[]>([]);
+export default function HomeRecomendations({
+  properties,
+  onSetProperties,
+}: any) {
   const [pending, setPending] = useState<boolean>(false);
   const [error, setError] = useState<string>();
 
   useEffect(() => {
     fetchData();
-  }, []);
+  });
 
   async function fetchData() {
     try {
       setPending(true);
 
       //const response = await axios.get("http://localhost:3333/api/properties");
-      //setProperties(response.data.properties);
+      //onSetProperties(response.data.properties);
 
       setTimeout(() => {
         setError("");
-        setProperties(testing_data);
-      }, 1000)
+        onSetProperties(testing_data);
+      }, 1000);
 
-      console.log()
+      console.log();
     } catch (e: any) {
       setError(e.response.data.message ?? e.response.message);
     } finally {
@@ -39,7 +40,7 @@ export default function HomeRecomendations() {
 
   return (
     <>
-      {properties.map((property) => {
+      {properties.map((property: Property) => {
         return (
           <Link href={`/imovel/${property.id}`} key={property.id}>
             <PropertyCard property={property} key={property.id} />

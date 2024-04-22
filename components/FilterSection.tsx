@@ -1,12 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { apiClient } from "@/services/apiClient";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import heroPng from "../public/images/hero2.png";
 import Image from "next/image";
+import { testing_data } from "@/utils/ItemsData";
+import { Property } from "@/types/types";
 
 // * CONFIGURAR VALIDATION *
 
@@ -25,9 +27,10 @@ const schema = yup.object().shape({
 
 type FormData = yup.InferType<typeof schema>;
 
-export default function FilterSection() {
+export default function FilterSection({ properties, onSetProperties }: any) {
   const [pending, setPending] = React.useState(false);
   const [error, setError] = React.useState<string>("");
+  const [filteredProperties, setFilteredProperties] = useState<FormData[]>([]);
 
   const {
     register,
@@ -62,7 +65,19 @@ export default function FilterSection() {
       setPending(false);
     }
 
-    console.log(data);
+    onSetProperties(
+      properties.filter((p: Property) => {
+        p.type === data.type &&
+          p.property_type === data.property_type &&
+          p.price >= data.min_price &&
+          p.price <= data.max_price &&
+          p.area >= data.min_area &&
+          p.price <= data.max_area &&
+          p.bedrooms >= data.bedrooms &&
+          p.bathrooms >= data.bathrooms &&
+          p.car_spots >= data.car_spots;
+      })
+    );
   }
 
   function requestError(e: any) {

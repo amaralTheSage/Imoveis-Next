@@ -1,7 +1,8 @@
 export interface Property {
   id: number;
   name: string;
-  type: "house" | "apartment" | "urban land" | "rural land";
+  type: "selling" | "renting";
+  property_type: "house" | "apartment" | "urban land" | "rural land";
   city: string;
   neighborhood: string;
   description: string;
