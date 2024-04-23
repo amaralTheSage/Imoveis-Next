@@ -6,7 +6,7 @@ export interface Property {
   city: string;
   neighborhood: string;
   description: string;
-  images: string[];
+  images: { imageUrl: any }[];
   area: number;
   bedrooms: number;
   bathrooms: number;

@@ -1,5 +1,7 @@
 import { Property } from "@/types/types";
 
+import imgImovel from "../public/images/img-imovel.png";
+
 const testing_data: Property[] = [
   {
     id: 1,
@@ -10,10 +12,18 @@ const testing_data: Property[] = [
     neighborhood: "Barra da Tijuca",
     description: "Casa ampla com vista para o mar, jardim e piscina.",
     images: [
-      "/images/img-imovel.png",
-      "/images/img-imovel.png",
-      "/images/img-imovel.png",
-      "/images/img-imovel.png",
+      {
+        imageUrl: imgImovel,
+      },
+      {
+        imageUrl: imgImovel,
+      },
+      {
+        imageUrl: imgImovel,
+      },
+      {
+        imageUrl: imgImovel,
+      },
     ],
     area: 350,
     bedrooms: 1,
@@ -33,10 +43,18 @@ const testing_data: Property[] = [
     description:
       "Acampamento de luxo com todas as comodidades modernas em meio à natureza.",
     images: [
-      "/images/img-imovel.png",
-      "/images/img-imovel.png",
-      "/images/img-imovel.png",
-      "/images/img-imovel.png",
+      {
+        imageUrl: imgImovel,
+      },
+      {
+        imageUrl: imgImovel,
+      },
+      {
+        imageUrl: imgImovel,
+      },
+      {
+        imageUrl: imgImovel,
+      },
     ],
     area: 500,
     bedrooms: 5,
@@ -55,10 +73,18 @@ const testing_data: Property[] = [
     neighborhood: "Fragata",
     description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
     images: [
-      "/images/img-imovel.png",
-      "/images/img-imovel.png",
-      "/images/img-imovel.png",
-      "/images/img-imovel.png",
+      {
+        imageUrl: imgImovel,
+      },
+      {
+        imageUrl: imgImovel,
+      },
+      {
+        imageUrl: imgImovel,
+      },
+      {
+        imageUrl: imgImovel,
+      },
     ],
     area: 500,
     bedrooms: 5,
@@ -77,10 +103,18 @@ const testing_data: Property[] = [
     neighborhood: "laranjal",
     description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
     images: [
-      "/images/img-imovel.png",
-      "/images/img-imovel.png",
-      "/images/img-imovel.png",
-      "/images/img-imovel.png",
+      {
+        imageUrl: imgImovel,
+      },
+      {
+        imageUrl: imgImovel,
+      },
+      {
+        imageUrl: imgImovel,
+      },
+      {
+        imageUrl: imgImovel,
+      },
     ],
     area: 500,
     bedrooms: 5,

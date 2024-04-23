@@ -63,21 +63,23 @@ export default function FilterSection({ properties, onSetProperties }: any) {
       requestError(e);
     } finally {
       setPending(false);
+
+      console.log(data);
     }
 
-    onSetProperties(
-      properties.filter((p: Property) => {
-        p.type === data.type &&
-          p.property_type === data.property_type &&
-          p.price >= data.min_price &&
-          p.price <= data.max_price &&
-          p.area >= data.min_area &&
-          p.price <= data.max_area &&
-          p.bedrooms >= data.bedrooms &&
-          p.bathrooms >= data.bathrooms &&
-          p.car_spots >= data.car_spots;
-      })
-    );
+    // onSetProperties(
+    //   properties.filter((p: Property) => {
+    //     p.type === data.type &&
+    //       p.property_type === data.property_type &&
+    //       p.price >= data.min_price &&
+    //       p.price <= data.max_price &&
+    //       p.area >= data.min_area &&
+    //       p.price <= data.max_area &&
+    //       p.bedrooms >= data.bedrooms &&
+    //       p.bathrooms >= data.bathrooms &&
+    //       p.car_spots >= data.car_spots;
+    //   })
+    // );
   }
 
   function requestError(e: any) {

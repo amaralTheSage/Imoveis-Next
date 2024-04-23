@@ -1,6 +1,6 @@
 import React from "react";
-import viteSvg from "../../../public/next.svg";
-import arrowIcon from "../../../public/arrow-icon.png";
+import viteSvg from "../../../public/images/vercel.svg";
+import arrowIcon from "../../../public/images/arrow-icon.png";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,11 +10,11 @@ function Login() {
       <Link href={"/"}>
         <Image
           src={arrowIcon}
-          className="mt-6 ml-2 lg:mt-12 lg:ml-8 lg:w-10"
+          className="mt-6 ml-2 lg:mt-12 lg:ml-8 lg:w-8"
           alt=""
         />
       </Link>
-      <main className="flex flex-col items-center mt-[200px]">
+      <main className="flex flex-col items-center mt-24">
         <Image src={viteSvg} alt="" className="w-14 lg:w-20" />
         <p className="font-medium text-2xl mb-12 mt-4 lg:text-4xl">
           Coisa Janice

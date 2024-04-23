@@ -11,19 +11,23 @@ import { apiClient } from "@/services/apiClient";
 import { format } from "../../../../utils/BRLFormatter";
 import imgImovel from "@/public/images/img-imovel.png";
 
-import mapIcon from "@/public/map-icon.svg";
-import bathtubIcon from "@/public/bathtub-icon.png";
-import bedIcon from "@/public/bed-icon.png";
-import mailIcon from "@/public/mail-icon.png";
-import carIcon from "@/public/car-icon.png";
-import rulerIcon from "@/public/ruler-icon.png";
-import whatsappIcon from "@/public/whatsapp-icon.png";
+import mapIcon from "@/public/images/map-icon.svg";
+import bathtubIcon from "@/public/images/bathtub-icon.png";
+import bedIcon from "@/public/images/bed-icon.png";
+import mailIcon from "@/public/images/mail-icon.png";
+import carIcon from "@/public/images/car-icon.png";
+import rulerIcon from "@/public/images/ruler-icon.png";
+import whatsappIcon from "@/public/images/whatsapp-icon.png";
+import { testing_data } from "@/utils/ItemsData";
 
 export default function PaginaImovel({ params }: { params: { id: number } }) {
-
-  const [imoveis, setImoveis] = useState<Property[]>([]);
-  const [imovel, setImovel] = useState<Property>({} as Property);
-  const [images, setImages]: [any, any] = useState([]);
+  const [imoveis, setImoveis] = useState<Property[]>(testing_data);
+  const [imovel, setImovel] = useState<Property>(
+    testing_data[params.id] as Property
+  );
+  const [images, setImages]: [any, any] = useState(
+    testing_data[params.id].images
+  );
   const [pending, setPending] = useState(true);
   const [error, setError] = useState<string>("");
 
@@ -61,8 +65,20 @@ export default function PaginaImovel({ params }: { params: { id: number } }) {
                 />
 
                 <div className="grid grid-cols-3  gap-1 md:text-2xl">
-                  <Image src={images[0].imageUrl} alt="" className="" />
-                  <Image src={images[1].imageUrl} alt="" className="" />
+                  <Image
+                    src={images[0].imageUrl}
+                    alt=""
+                    className=""
+                    width={10}
+                    height={10}
+                  />
+                  <Image
+                    src={images[1].imageUrl}
+                    alt=""
+                    className=""
+                    width={10}
+                    height={10}
+                  />
                   <div className="w-full text-center">
                     <Image
                       src={images[2].imageUrl}
